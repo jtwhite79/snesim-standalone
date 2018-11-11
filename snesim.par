@@ -12,8 +12,8 @@ vertprop.dat    - file with target vertical proportions
 0               - servosystem parameter (0=no correction)
 -1              - debugging level: 0,1,2,3
 snesim.dbg      - debugging file
-snesim.out      - file for simulation output
-2               - number of realizations to generate
+snesim.out
+1               - number of realizations to generate
 250 0.5 1       - nx,xmn,xsiz
 250 0.5 1       - ny,ymn,ysiz
 1 0.5 1         - nz,zmn,zsiz
