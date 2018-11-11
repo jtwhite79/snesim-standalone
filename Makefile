@@ -1,5 +1,5 @@
 OBJS = sortem.o chknam.o snesim.o
-CC = gfortran
+CC = ifort
 
 # WINDOWS/LINUX GCC
 CFLAGS = -O3 -static
