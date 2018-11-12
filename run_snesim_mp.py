@@ -1,9 +1,15 @@
 import os
+import platform
 import shutil
 from datetime import datetime
 import multiprocessing as mp
 import numpy as np
 import matplotlib.pyplot as plt
+
+bin_name = "snesim"
+if not platform.platform().lower().startswith("win"):
+	bin_name = "./" + bin_name
+
 
 with open("snesim.par", 'r') as f:
     lines = f.readlines()
@@ -31,7 +37,7 @@ def worker(iworker, nreals, seed):
         with open("snesim.par", 'w') as f:
             [f.write(line) for line in lines]
 
-        os.system("./snesim <snesim.par >nul")
+        os.system("{0} <snesim.par >nul".format(bin_name))
         nreal = 1
         with open("snesim.out", 'r') as f:
             [f.readline() for _ in range(4)]
@@ -47,7 +53,7 @@ def draw():
         shutil.rmtree(arr_dir)
     os.mkdir(arr_dir)
     s = datetime.now()
-    nworkers = 7
+    nworkers = 10
     nreals = 1000
     procs = []
     for iworker in range(nworkers):
@@ -72,4 +78,5 @@ def process_draws():
 
 
 if __name__ == "__main__":
-    process_draws()
+    draw()
+    #process_draws()
