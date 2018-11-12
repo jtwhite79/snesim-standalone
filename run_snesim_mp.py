@@ -14,9 +14,7 @@ for i, line in enumerate(lines):
 iline = i
 seed_line = lines[iline][10:]
 arr_dir = "reals"
-if os.path.exists(arr_dir):
-    shutil.rmtree(arr_dir)
-os.mkdir(arr_dir)
+
 
 
 def worker(iworker, nreals, seed):
@@ -44,8 +42,10 @@ def worker(iworker, nreals, seed):
         np.savetxt(os.path.join("..", arr_dir, "real_{0:05d}_{1:05d}.dat".format(ireal, iworker)), arr, fmt="%1d")
     os.chdir("..")
 
-
-if __name__ == "__main__":
+def draw():
+    if os.path.exists(arr_dir):
+        shutil.rmtree(arr_dir)
+    os.mkdir(arr_dir)
     s = datetime.now()
     nworkers = 7
     nreals = 1000
@@ -58,4 +58,18 @@ if __name__ == "__main__":
 
     for p in procs:
         p.join()
-    print("took:",(datetime.now() - s).total_seconds())
+
+    print("took:", (datetime.now() - s).total_seconds())
+
+
+def process_draws():
+    reals = os.listdir(arr_dir)
+    for real in reals:
+        arr = np.loadtxt(os.path.join(arr_dir,real))
+        plt.imshow(arr)
+        plt.show()
+        break
+
+
+if __name__ == "__main__":
+    process_draws()
